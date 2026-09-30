@@ -1,0 +1,22 @@
+{
+  "name": "cvs-dfm-regression-report",
+  "tasks": [
+    {
+      "task_key": "render_and_notify",
+      "notebook_task": {
+        "notebook_path": "/Workspace/Users/narasimha.kamathardi@databricks.com/cvs-dfm-report-demo/dfm_report_job",
+        "base_parameters": {"run_id": "", "webhook_url": "", "webhook_format": "slack"}
+      }
+    }
+  ],
+  "trigger": {
+    "pause_status": "UNPAUSED",
+    "table_update": {
+      "table_names": ["users.narasimha_kamathardi.dfm_suite_status"],
+      "condition": "ANY_UPDATED",
+      "min_time_between_triggers_seconds": 60
+    }
+  },
+  "queue": {"enabled": true},
+  "max_concurrent_runs": 1
+}

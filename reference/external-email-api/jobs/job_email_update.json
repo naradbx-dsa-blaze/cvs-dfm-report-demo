@@ -1,0 +1,22 @@
+{
+  "job_id": 765289405988218,
+  "new_settings": {
+    "name": "cvs-dfm-regression-report-email",
+    "tasks": [
+      {
+        "task_key": "render_and_email",
+        "notebook_task": {
+          "notebook_path": "/Workspace/Users/narasimha.kamathardi@databricks.com/cvs-dfm-report-demo/dfm_report_email_job",
+          "base_parameters": {
+            "run_id": "", "provider": "resend",
+            "sender": "onboarding@resend.dev",
+            "recipients": "narasimha.kamathardi@databricks.com",
+            "subject": "", "dry_run": "false", "secret_scope": "cvs_dfm_email"
+          }
+        }
+      }
+    ],
+    "queue": {"enabled": true},
+    "max_concurrent_runs": 1
+  }
+}

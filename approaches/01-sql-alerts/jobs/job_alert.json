@@ -1,0 +1,18 @@
+{
+  "name": "cvs-dfm-alert-email",
+  "tasks": [
+    {
+      "task_key": "fire_alert",
+      "sql_task": {
+        "warehouse_id": "6674ed0664e1e8a3",
+        "alert": {
+          "alert_id": "26c9e7ac-f7a3-4e6d-b69a-58bf7c25646c",
+          "subscriptions": [{"user_name": "narasimha.kamathardi@databricks.com"}],
+          "pause_subscriptions": false
+        }
+      }
+    }
+  ],
+  "queue": {"enabled": true},
+  "max_concurrent_runs": 1
+}

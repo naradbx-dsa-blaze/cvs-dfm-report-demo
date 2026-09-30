@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<!-- CVS DFM Regression run report. Inline, table-based styling so it renders identically
+     in a browser, a webhook card preview, and legacy email clients (Outlook/Gmail). -->
+<body style="margin:0; padding:24px; background:#ffffff;
+             font-family:Arial, Helvetica, sans-serif; color:#000000; font-size:14px;">
+
+  <!-- top rule, matches the horizontal line at the top of the source report -->
+  <hr style="border:none; border-top:1px solid #000000; margin:0 0 20px 0;">
+
+  {# ---- reusable cell styles ---------------------------------------------- #}
+  {% set th = "border:1px solid #000000; padding:6px 10px; text-align:center;
+               font-weight:bold; vertical-align:middle;" %}
+  {% set td = "border:1px solid #000000; padding:6px 10px; text-align:center;
+               vertical-align:middle; word-break:break-word;" %}
+  {% set section = "font-size:16px; font-weight:bold; margin:28px 0 10px 0;" %}
+  {% set outer = "border-collapse:collapse; border:3px double #000000; width:100%;
+                  max-width:1000px; margin:0;" %}
+
+  {# ====================== 1. REQUEST SUMMARY ============================== #}
+  <div style="{{ section }}">Request Summary</div>
+  <table style="{{ outer }}">
+    <thead>
+      <tr>
+        <th style="{{ th }}">Super Client<br>Name</th>
+        <th style="{{ th }}">Request Run<br>Date</th>
+        <th style="{{ th }}">Parent Request Id</th>
+        <th style="{{ th }}">Request Id</th>
+        <th style="{{ th }}">Task<br>Id</th>
+        <th style="{{ th }}">Forecast Start<br>Date</th>
+        <th style="{{ th }}">LOB</th>
+        <th style="{{ th }}">App<br>ID</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="{{ td }}">{{ request.super_client_name }}</td>
+        <td style="{{ td }}">{{ request.request_run_date }}</td>
+        <td style="{{ td }}">{{ request.parent_request_id }}</td>
+        <td style="{{ td }}">{{ request.request_id }}</td>
+        <td style="{{ td }}">{{ request.task_id }}</td>
+        <td style="{{ td }}">{{ request.forecast_start_date }}</td>
+        <td style="{{ td }}">{{ request.lob }}</td>
+        <td style="{{ td }}">{{ request.app_id }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  {# ================ 2. EXECUTION SUITE STATUS SUMMARY ===================== #}
+  <div style="{{ section }}">Execution Suite Status Summary</div>
+  <table style="{{ outer }}">
+    <thead>
+      <tr>
+        <th style="{{ th }}">Run ID</th>
+        <th style="{{ th }}">Suite Category</th>
+        <th style="{{ th }}">Execution Status</th>
+        <th style="{{ th }}">Status</th>
+        <th style="{{ th }}">Total Count</th>
+        <th style="{{ th }}">Success Count</th>
+        <th style="{{ th }}">Failure Count</th>
+        <th style="{{ th }}">Elapsed Time</th>
+        <th style="{{ th }}">Run User</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="{{ td }}">{{ suite.run_id }}</td>
+        <td style="{{ td }}">{{ suite.suite_category }}</td>
+        <td style="{{ td }}">{{ suite.execution_status }}</td>
+        <td style="{{ td }}">{{ suite.status }}</td>
+        <td style="{{ td }}">{{ suite.total_count }}</td>
+        <td style="{{ td }}">{{ suite.success_count }}</td>
+        <td style="{{ td }}">{{ suite.failure_count }}</td>
+        <td style="{{ td }}">{{ suite.elapsed_time }}</td>
+        <td style="{{ td }}">
+          <a href="mailto:{{ suite.run_user }}" style="color:#1155cc; text-decoration:underline;">{{ suite.run_user }}</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  {# ============= 3. EXECUTION FAILED QUERY SUMMARY STATUS ================= #}
+  <div style="{{ section }}">Execution Failed Query Summary Status</div>
+  <table style="{{ outer }}">
+    <thead>
+      <tr>
+        <th style="{{ th }}">Run ID</th>
+        <th style="{{ th }}">Suite Category</th>
+        <th style="{{ th }}">Test<br>Code</th>
+        <th style="{{ th }}">Tags</th>
+        <th style="{{ th }}">Test Description</th>
+        <th style="{{ th }}">Execution Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for q in failed_queries %}
+      <tr>
+        <td style="{{ td }}">{{ q.run_id }}</td>
+        <td style="{{ td }}">{{ q.suite_category }}</td>
+        <td style="{{ td }}">{{ q.test_code }}</td>
+        <td style="{{ td }}">{{ q.tags }}</td>
+        <td style="{{ td }} text-align:center;">{{ q.test_description }}</td>
+        <td style="{{ td }}">{{ q.execution_status }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  {# =================== 4. THRESHOLD SUMMARY STATUS ======================== #}
+  <div style="{{ section }}">Threshold Summary Status</div>
+  <table style="border-collapse:collapse; border:1px solid #000000; width:100%; max-width:520px; margin:0;">
+    <thead>
+      <tr>
+        <th style="{{ th }}">Threshold Query Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t in thresholds %}
+      <tr>
+        <td style="{{ td }}">{{ t.threshold_query_description }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</body>
+</html>
